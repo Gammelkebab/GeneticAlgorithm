@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
+#include <cstring>
 
 int nitems = 290;
 int nbins = 200;
