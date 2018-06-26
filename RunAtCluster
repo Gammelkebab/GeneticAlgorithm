@@ -1,5 +1,8 @@
 #!/bin/bash
+if [ -d GeneticAlgorithm ]
+then
 cd GeneticAlgorithm
+fi
 git pull -f
 ./Script.sh
 
