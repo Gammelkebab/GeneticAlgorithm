@@ -3,5 +3,5 @@ if [ $# -eq 0 ]
 then
  echo "Usage: ./run USERNAME"
 else
- ssh nhmq$1@login.cluster.uni-hannover.de './Genetic_Algorithm/RunAtCluster'
+ ssh nhmq$1@login.cluster.uni-hannover.de './GeneticAlgorithm/RunAtCluster'
 fi
