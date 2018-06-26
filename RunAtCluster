@@ -1,0 +1,5 @@
+#!/bin/bash
+cd Genetic_Algorithm
+git pull -f
+./Script.sh
+
