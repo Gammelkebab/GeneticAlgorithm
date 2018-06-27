@@ -1,0 +1,2 @@
+Time taken:
+Without modifications: 700-800s
