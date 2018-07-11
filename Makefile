@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS = -g -Wall -Wextra -O3
+CFLAGS = -g -Wall -Wextra -O3 -fopenmp
 
 OBJ = main.o
 BIN = main

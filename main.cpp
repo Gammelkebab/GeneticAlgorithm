@@ -4,6 +4,7 @@
 #include <string.h>
 #include <sys/time.h>
 #include <cstring>
+#include <omp.h>
 
 int nitems = 290;
 int nbins = 200;
@@ -51,13 +52,15 @@ int fitness(int *genes, int *vbins, int* vitems) {
 			--i;
 		}
 	}
-	for (int i=0; i<nbins; ++i) {
-		if(bins[i] > vbins[i]) {
-			fit += 1+(bins[i]-vbins[i]);
-		} else if (bins[i] > 0) {
-			fit ++;
-		}
-	}
+    #pragma omp parallel for 
+    for (int i=0; i<nbins; ++i) {
+	    if(bins[i] > vbins[i]) {
+		    fit += 1+(bins[i]-vbins[i]);
+	    } else if (bins[i] > 0) {
+		    fit ++;
+	    }
+    }
+	 
 
 	/****************************
 	***DO NOT CHANGE THIS PART***
@@ -83,6 +86,7 @@ int comp(const void *a,const void *b) {
 //returns random genes
 int* create_random_genes() {
 	int* genes = new int[nitems];
+	#pragma omp parallel for
 	for(int i=0; i<nitems; ++i) {
 		genes[i] = rand()%(nbins);
 	}
@@ -93,6 +97,7 @@ int* create_random_genes() {
 struct chrom* combine(struct chrom* parent1, struct chrom* parent2) {
 	struct chrom* child = new struct chrom;
 	child->genes = new int[nitems];
+	#pragma omp parallel for
 	for(int i=0; i<nitems; ++i) {
 		if(rand()%2==0) {
 			child->genes[i] = parent1->genes[i];
@@ -118,6 +123,7 @@ struct chrom* pick_best_of(struct chrom* old_pop) {
 
 //with 2% probability: assign new random value to gene
 void mutate(int* genes) {
+    #pragma omp parallel for
 	for (int i=0; i<nitems; ++i) {
 		if(rand()%100 < 2) {
 			genes[i] = rand()%nbins;
@@ -137,6 +143,7 @@ void genetic_algorithm(int *vbins, int* vitems) {
 	struct chrom* population = new struct chrom[popsize];
 
 	//create first random population
+	#pragma omp parallel for
 	for (int i=0; i<popsize; ++i) {
 		population[i].genes = create_random_genes();
 		population[i].random = 1;
@@ -154,6 +161,7 @@ void genetic_algorithm(int *vbins, int* vitems) {
 
 		//elitism
 		//copy the best chromosomes to the new population
+		#pragma omp parallel for
 		for (int i=0; i<COPY; ++i) {
 			population[i].genes = new int[nitems];
 			memcpy(population[i].genes, old_pop[i].genes, sizeof(int)*nitems);
@@ -175,6 +183,7 @@ void genetic_algorithm(int *vbins, int* vitems) {
 			delete child;
 		}
 		//add some new random chromosomes
+		#pragma omp parallel for
 		for (int i=COPY+COMBINE; i<popsize; i++) {
 			population[i].genes = create_random_genes();
 			population[i].random = 1;
@@ -185,6 +194,7 @@ void genetic_algorithm(int *vbins, int* vitems) {
 		iteration++;
 
 		//free memory!
+		#pragma omp parallel for
 		for(int i=0; i<popsize; ++i) {
 			delete[] old_pop[i].genes;
 		}
@@ -192,6 +202,7 @@ void genetic_algorithm(int *vbins, int* vitems) {
 	}
 
 	//printf("best overall fitness: %d \n",population[0].fit);
+	#pragma omp parallel for
 	for(int i=0; i<popsize; ++i) {
 			delete[] population[i].genes;
 	}
@@ -201,10 +212,12 @@ void genetic_algorithm(int *vbins, int* vitems) {
 //assigns random volumes (depending on random state) to each bin/item
 void create_bin_packing_problem(int* vbins, int* vitems, int random_state) {
 	srand(random_state);
+	
+    #pragma omp parallel for
 	for(int i=0; i<nbins; ++i) {
 		vbins[i] = rand()%500+40;
 	}
-
+    #pragma omp parallel for
 	for(int i=0; i<nitems; ++i) {
 		vitems[i] = rand()%200+20;
 	}
@@ -212,10 +225,12 @@ void create_bin_packing_problem(int* vbins, int* vitems, int random_state) {
 }
 
 int main(int argc, char** argv) {
+
+    omp_set_num_threads(4);
     //time measurement
     double elapsed = 0;
     struct timeval begin, end;
-
+    
 	int *vbins = new int[nbins];
 	int *vitems = new int[nitems];
 
