@@ -157,6 +157,7 @@ void genetic_algorithm(int *vbins, int* vitems) {
 
 	//fixed value to see speedup of parallelisation!
 	while(iteration < 500) {
+	    #pragma omp master
 	    printf("Iteration #%i\n", iteration);
 		//keep the previous population
 		struct chrom* old_pop = population;
@@ -230,7 +231,7 @@ void create_bin_packing_problem(int* vbins, int* vitems, int random_state) {
 
 int main(int argc, char** argv) {
 
-    omp_set_num_threads(4);
+    printf("Genetic Algorithm running. Amount of threads %d\n", omp_get_num_threads());
     //time measurement
     double elapsed = 0;
     struct timeval begin, end;

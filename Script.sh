@@ -1,5 +1,5 @@
 #!/bin/bash -login
-#PBS -N MPI
+#PBS -N GeneticAlgorithm
 #PBS -j oe
 #PBS -m ae
 #PBS -l nodes=4:ppn=2
@@ -12,4 +12,4 @@ cd GeneticAlgorithm
 
 make
 
-./main
+./main > log.txt
