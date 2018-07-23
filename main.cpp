@@ -157,6 +157,7 @@ void genetic_algorithm(int *vbins, int* vitems) {
 
 	//fixed value to see speedup of parallelisation!
 	while(iteration < 500) {
+	    printf("Iteration #%i\n", iteration);
 		//keep the previous population
 		struct chrom* old_pop = population;
 		population = new struct chrom[popsize];
