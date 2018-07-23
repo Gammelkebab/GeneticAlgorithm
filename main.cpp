@@ -149,6 +149,8 @@ void genetic_algorithm(int *vbins, int* vitems) {
 		population[i].random = 1;
 		population[i].fit = fitness(population[i].genes, vbins, vitems);
 	}
+	
+/************************************ Parallel quicksort evtl. implementieren? ************************************/
 	qsort(population, popsize, sizeof(chrom), comp);
 
 	int iteration = 0;
@@ -161,7 +163,7 @@ void genetic_algorithm(int *vbins, int* vitems) {
 
 		//elitism
 		//copy the best chromosomes to the new population
-		#pragma omp parallel for
+		#pragma omp parallel for schedule(static)
 		for (int i=0; i<COPY; ++i) {
 			population[i].genes = new int[nitems];
 			memcpy(population[i].genes, old_pop[i].genes, sizeof(int)*nitems);
@@ -169,6 +171,7 @@ void genetic_algorithm(int *vbins, int* vitems) {
 			population[i].random = old_pop[i].random;
 		}
 		//combine and mutate 2 chromosomes
+		#pragma omp parallel for schedule(static)
 		for (int i=0; i<COMBINE; ++i) {
 			struct chrom* parent1 = pick_best_of(old_pop);
 			struct chrom* parent2 = pick_best_of(old_pop);
