@@ -231,7 +231,7 @@ void create_bin_packing_problem(int* vbins, int* vitems, int random_state) {
 
 int main(int argc, char** argv) {
 
-    printf("Genetic Algorithm running. Amount of threads %d\n", omp_get_num_threads());
+    printf("Genetic Algorithm running. Amount of threads %d\n", omp_get_max_threads());
     //time measurement
     double elapsed = 0;
     struct timeval begin, end;
