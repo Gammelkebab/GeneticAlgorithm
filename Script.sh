@@ -8,6 +8,8 @@
 
 module load intel
 
+cd GeneticAlgorithm
+
 make
 
 ./main
