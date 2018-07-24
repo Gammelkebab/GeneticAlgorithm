@@ -44,6 +44,7 @@ int spentSomeTime(int a) {
 int fitness(int *genes, int *vbins, int* vitems) {
 	int fit = 0;
 	int *bins = new int[nbins]();
+	#pragma omp parallel for schedule(dynamic)
 	for (int i=0; i<nitems; ++i) {
 		if(bins[genes[i]]+vitems[i] < vbins[genes[i]]) {
 			bins[genes[i]] += vitems[i];
