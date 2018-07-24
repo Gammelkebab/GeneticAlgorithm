@@ -40,6 +40,13 @@ int spentSomeTime(int a) {
 //at the end a function increases the runtime to simulate a more complex fitness function
 //may be important for parallelisation!!!
 int fitness(int *genes, int *vbins, int* vitems) {
+
+    double elapsed = 0;
+    struct timeval begin, end;
+    
+    
+    gettimeofday(&begin, NULL);
+
 	int fit = 0;
 	int *bins = new int[nbins]();
 	for (int i=0; i<nitems; ++i) {
@@ -67,7 +74,11 @@ int fitness(int *genes, int *vbins, int* vitems) {
 	/***************************
 	**********PART END**********
 	****************************/
-
+	
+    gettimeofday(&end, NULL);
+    elapsed += (end.tv_sec - begin.tv_sec) + ((end.tv_usec - begin.tv_usec)/1000000.0);
+    printf("Runtime for one fitness call: %.5fs\n",elapsed);
+    
 	delete[] bins;
 	return fit;
 }
