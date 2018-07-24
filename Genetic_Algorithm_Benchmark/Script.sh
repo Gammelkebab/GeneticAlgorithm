@@ -9,7 +9,7 @@
 
 module load intel
 
-cd GeneticAlgorithm
+cd GeneticAlgorithm/Genetic_Algorithm_Benchmark
 
 make
 
