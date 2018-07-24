@@ -5,7 +5,6 @@
 #PBS -l nodes=1:ppn=16
 #PBS -l walltime=00:20:00
 #PBS -l mem=4gb
-#PBS -o ga_log.txt
 
 module load intel
 
