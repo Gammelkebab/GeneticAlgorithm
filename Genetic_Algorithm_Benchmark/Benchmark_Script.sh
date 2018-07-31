@@ -13,4 +13,4 @@ cd GeneticAlgorithm/Genetic_Algorithm_Benchmark
 
 make
 
-./main
+./main > log.txt

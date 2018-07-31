@@ -53,7 +53,7 @@ int fitness(int *genes, int *vbins, int* vitems) {
 			--i;
 		}
 	}
-    #pragma omp parallel for 
+    #pragma omp parallel for
     for (int i=0; i<nbins; ++i) {
 	    if(bins[i] > vbins[i]) {
 		    fit += 1+(bins[i]-vbins[i]);
@@ -61,7 +61,7 @@ int fitness(int *genes, int *vbins, int* vitems) {
 		    fit ++;
 	    }
     }
-	 
+
 
 	/****************************
 	***DO NOT CHANGE THIS PART***
@@ -150,7 +150,7 @@ void genetic_algorithm(int *vbins, int* vitems) {
 		population[i].random = 1;
 		population[i].fit = fitness(population[i].genes, vbins, vitems);
 	}
-	
+
 /************************************ Parallel quicksort evtl. implementieren? ************************************/
 	qsort(population, popsize, sizeof(chrom), comp);
 
@@ -218,7 +218,7 @@ void genetic_algorithm(int *vbins, int* vitems) {
 //assigns random volumes (depending on random state) to each bin/item
 void create_bin_packing_problem(int* vbins, int* vitems, int random_state) {
 	srand(random_state);
-	
+
     #pragma omp parallel for
 	for(int i=0; i<nbins; ++i) {
 		vbins[i] = rand()%500+40;
@@ -236,7 +236,7 @@ int main(int argc, char** argv) {
     //time measurement
     double elapsed = 0;
     struct timeval begin, end;
-    
+
 	int *vbins = new int[nbins];
 	int *vitems = new int[nitems];
 
@@ -249,6 +249,6 @@ int main(int argc, char** argv) {
 
     gettimeofday(&end, NULL);
     elapsed += (end.tv_sec - begin.tv_sec) + ((end.tv_usec - begin.tv_usec)/1000000.0);
-    printf("Runtime: %.5fs\n",elapsed);
+    printf("Runtime: %.5fs, Speedup: %.5fx\n",elapsed, (687/elapsed));
 
 }
