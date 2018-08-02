@@ -4,10 +4,8 @@
 #PBS -m ae
 #PBS -l nodes=1:ppn=1
 #PBS -l walltime=00:20:00
-#PBS -l mem=4gb
+#PBS -l mem=512mb
 #PBS -W x=PARTITION:lena
-
-module load intel
 
 cd GeneticAlgorithm/Genetic_Algorithm_Benchmark
 
