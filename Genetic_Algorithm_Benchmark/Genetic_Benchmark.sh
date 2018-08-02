@@ -7,8 +7,8 @@
 #PBS -l mem=512mb
 #PBS -W x=PARTITION:lena
 
-cd GeneticAlgorithm/Genetic_Algorithm_Benchmark
+cd $BIGWORK/GeneticAlgorithm/Genetic_Algorithm_Benchmark
 
 make
 
-./main > log.txt
+./main
