@@ -7,10 +7,13 @@
 #PBS -l mem=512mb
 #PBS -W x=PARTITION:lena
 
-module load intel
+RND=$RANDOM
 
+cp -r GeneticAlgorithm $BIGWORK/GeneticAlgorithm_$RND
 cd $BIGWORK/GeneticAlgorithm
 
+module load intel
+make clean
 make
 
 ./main
