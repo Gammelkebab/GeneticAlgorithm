@@ -7,8 +7,10 @@
 #PBS -l mem=512mb
 #PBS -W x=PARTITION:lena
 
-cd $BIGWORK/GeneticAlgorithm/Genetic_Algorithm_Benchmark
+RND=$RANDOM
 
+cp -r GeneticAlgorithm/Genetic_Algorithm_Benchmark $BIGWORK/GeneticAlgorithm_Benchmark_$RND
+cd $BIGWORK/GeneticAlgorithm
 make
 
 ./main
