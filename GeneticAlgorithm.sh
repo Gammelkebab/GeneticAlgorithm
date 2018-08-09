@@ -10,7 +10,7 @@
 RND=$RANDOM
 
 cp -r GeneticAlgorithm $BIGWORK/GeneticAlgorithm_$RND
-cd $BIGWORK/GeneticAlgorithm
+cd $BIGWORK/GeneticAlgorithm_$RND
 
 module load intel
 make clean

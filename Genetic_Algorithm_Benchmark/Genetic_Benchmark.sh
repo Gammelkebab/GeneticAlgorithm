@@ -10,7 +10,7 @@
 RND=$RANDOM
 
 cp -r GeneticAlgorithm/Genetic_Algorithm_Benchmark $BIGWORK/GeneticAlgorithm_Benchmark_$RND
-cd $BIGWORK/GeneticAlgorithm
+cd $BIGWORK/GeneticAlgorithm_$RND
 make
 
 ./main
